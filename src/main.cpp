@@ -7,16 +7,17 @@
 static void NetworkTask(void *param);
 static void DHCPTask(void *param);
 
-#define ETH_SCK GPIO_NUM_10
+#define ETH_SCK GPIO_NUM_12
 #define ETH_MISO GPIO_NUM_10
-#define ETH_MOSI GPIO_NUM_10
-#define ETH_SS GPIO_NUM_10
+#define ETH_MOSI GPIO_NUM_11
+#define ETH_SS GPIO_NUM_13
+#define ETH_RST GPIO_NUM_9
 
 #define NETWORK_BROADCAST_IP {239, 128, 128, 69}
 #define NETWORK_PORT 7000
 
-#define MIDI_OUT_PIN GPIO_NUM_10
-#define MIDI_IN_PIN GPIO_NUM_10
+#define MIDI_IN_PIN GPIO_NUM_2
+#define MIDI_OUT_PIN GPIO_NUM_1
 
 #define LOOP_DELAY_MS 20
 
@@ -37,7 +38,7 @@ void setup()
   Ethernet.init(ETH_SS);
   Ethernet.begin(MAC_Address);
   UDP.beginMulticast(NETWORK_BROADCAST_IP, NETWORK_PORT);
-
+  Serial2.setPins(MIDI_IN_PIN, MIDI_OUT_PIN);
   MIDI.begin(MIDI_CHANNEL_OFF);
 
   static TaskHandle_t NetworkTaskHandle;
