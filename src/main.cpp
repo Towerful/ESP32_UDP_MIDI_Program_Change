@@ -24,6 +24,7 @@ static EthernetUDP UDP;
 
 struct MySettings : public midi::DefaultSettings
 {
+  static const long BaudRate = 31250;
 };
 MIDI_CREATE_CUSTOM_INSTANCE(HardwareSerial, Serial2, MIDI, MySettings);
 
@@ -37,8 +38,6 @@ void setup()
   Ethernet.begin(MAC_Address);
   UDP.beginMulticast(NETWORK_BROADCAST_IP, NETWORK_PORT);
 
-  // Serial2
-  Serial2.begin(31250);
   MIDI.begin(MIDI_CHANNEL_OFF);
 
   static TaskHandle_t NetworkTaskHandle;
